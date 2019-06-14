@@ -7,11 +7,10 @@ import com.facturacion.dao.ClienteDao;
 import com.facturacion.utils.Utils;
 import com.facturacion.views.FacturaView;
 import com.facturacion.MainView;
+import java.awt.HeadlessException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -104,7 +103,7 @@ public class FacturaController {
             try {
                 ((DefaultTableModel) vista.getTblProductos().getModel()).removeRow(id);
                 JOptionPane.showMessageDialog(vista, "registro eliminado");
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(vista, "Error no se pudo eliminar el registro, intente seleccionarlo de nuevo!");
             }
         }
@@ -123,17 +122,17 @@ public class FacturaController {
     public void llenarCmbCliente() {
         this.vista.getCmbCliente().removeAllItems();
         List<Cliente> listadoCliente = daoc.consultar("");
-        for (Cliente c : listadoCliente) {
+        listadoCliente.forEach((c) -> {
             this.vista.getCmbCliente().addItem(c);
-        }
+        });
     }
 
     private void llenarCmbProducto() {
         this.vista.getCmbProducto().removeAllItems();
         List<Producto> listadoProductos = daof.consultarProductos();
-        for (Producto p : listadoProductos) {
+        listadoProductos.forEach((p) -> {
             this.vista.getCmbProducto().addItem(p);
-        }
+        });
     }
 
     public void limpiarTabla() {
